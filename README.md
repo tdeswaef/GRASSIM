@@ -4,10 +4,10 @@
 ### Model simulation
 Model simulation is done as follows:
 - make sure that all files are in de same folder
-- in the 01_ModelSimulation.R file: 
+- in the [01_ModelSimulation.R](./01_ModelSimulation.R) file: 
   - modify the working directory to that folder
   - adapt the PLANTNo parameter under Settings if desired
-- Run the entire 01_ModelSimulation.R script
+- Run the entire [01_ModelSimulation.R](./01_ModelSimulation.R) script
 
 You will have created an RDS file starting with "Simulation_Exp2_" which can be read in R by the `readRDS()` function
 
@@ -24,13 +24,13 @@ __RDS files__
 
 __txt file__
 
-GrassMod_Exp2.txt: txt file of the model used in Exp2
+[GrassMod_Exp2.txt](./GrassMod_Exp2.txt): txt file of the model used in Exp2
 
 __R files__
 
-- Thetas_Exp2.R: generation of the 'thetas_Exp2' named vector based on parameter settings
-- Inits_Exp2.R: generation of the 'inits_Exp2' named vector based on initial values of state variables
-- 01_ModelSimulation.R: script for model simulation with reference parameters including: 
+- [Thetas_Exp2.R](./Thetas_Exp2.R): generation of the 'thetas_Exp2' named vector based on parameter settings
+- [Inits_Exp2.R](./Inits_Exp2.R): generation of the 'inits_Exp2' named vector based on initial values of state variables
+- [01_ModelSimulation.R](01_ModelSimulation.R): script for model simulation with reference parameters including: 
   - Loading input data
   - Loading Calibration data
   - Simulation settings
