@@ -1,0 +1,418 @@
+Psi.Soil <- Psi_Soil_input;
+W.Root <- Volume.Root*ro_Water;
+Psi.Root <- P.Root;
+F.Root <- (Psi.Soil - Psi.Root)/(R.Root/2);
+  
+epsilon.GZm <- (epsilon.GZm_l * epsilon.GZm_w * epsilon.GZm_th )/ 
+           (epsilon.GZm_l * epsilon.GZm_w + epsilon.GZm_l * epsilon.GZm_th + epsilon.GZm_th * epsilon.GZm_w);
+epsilon.MZm = (epsilon.MZm_l * epsilon.MZm_w * epsilon.MZm_th )/ 
+           (epsilon.MZm_l * epsilon.MZm_w + epsilon.MZm_l * epsilon.MZm_th + epsilon.MZm_th * epsilon.MZm_w);
+ 
+Area.Blade_1 <- Wi.Bladem_1 * Le.Bladem_1; 
+Area.Blade_2 <- Wi.Bladem_2 * Le.Bladem_2; 
+Area.Blade_3 <- Wi.Bladem_3 * Le.Bladem_3; 
+Area.Blade_4 <- Wi.Bladem_4 * Le.Bladem_4; 
+
+Area.Tiller <-  Area.Blade_1 + Area.Blade_2 + Area.Blade_3 + Area.Blade_4  ; 
+
+    Transp.Blade_1 <- Transp_input*Area.Blade_1;
+    
+    Osm.HZm_1 <- -R * Temp * M.HZm_1 / (M_Suc*Volume.HZm_1*ro_Water);
+    Osm.Bladem_1 <- -R * Temp * M.Bladem_1 / (M_Suc*Volume.Bladem_1*ro_Water);
+    
+    W.HZx_1 <- Volume.HZx_1*ro_Water;
+    W.Bladex_1 <- Volume.Bladex_1*ro_Water;
+    
+    W.HZm_1 <- Volume.HZm_1*ro_Water;
+    W.Bladem_1 <- Volume.Bladem_1*ro_Water;
+   
+    Psi.HZm_1 <- P.HZm_1 + Osm.HZm_1;
+    Psi.Bladem_1 <- P.Bladem_1 + Osm.Bladem_1;
+
+    Psi.HZx_1 <- P.HZx_1;
+    Psi.Bladex_1 <- P.Bladex_1;
+    
+    F.HZx_1 <- (Psi.Root - Psi.HZx_1)/(R.Root/2+R.HZx_1/2);
+    F.Bladex_1 <- (Psi.HZx_1 - Psi.Bladex_1)/(R.HZx_1/2+R.Bladex_1/2);
+    
+    F.HZm_1 <- (Psi.HZx_1 - Psi.HZm_1)/R.HZm_1;
+    F.Bladem_1 <- (Psi.Bladex_1 - Psi.Bladem_1)/R.Bladem_1;
+    
+    dW.HZm_1 <- F.HZm_1;
+    dW.Bladem_1 <- F.Bladem_1 - Transp.Blade_1;
+    
+    dW.HZx_1 <- F.HZx_1 - F.HZm_1 - F.Bladex_1;
+    dW.Bladex_1 <- F.Bladex_1 - F.Bladem_1;
+    
+    dP.HZm_1 <- epsilon.MZm*dW.HZm_1/W.HZm_1; 
+    dP.Bladem_1 <- epsilon.MZm*dW.Bladem_1/W.Bladem_1;
+
+    dLe.HZm_1 = Le.HZm_1/epsilon.MZm_l *dP.HZm_1;
+    dWi.HZm_1 = Wi.HZm_1/epsilon.MZm_w *dP.HZm_1;
+    dTh.HZm_1 = Th.HZm_1/epsilon.MZm_th*dP.HZm_1;
+    
+    dLe.Bladem_1 = Le.Bladem_1/epsilon.MZm_l *dP.Bladem_1;
+    dWi.Bladem_1 = Wi.Bladem_1/epsilon.MZm_w *dP.Bladem_1;
+    dTh.Bladem_1 = Th.Bladem_1/epsilon.MZm_th*dP.Bladem_1;
+    
+    dLe.Leaf_1 = dLe.HZm_1 + dLe.Bladem_1;
+    
+    d/dt(P.HZx_1) <- epsilon.MZx*dW.HZx_1/W.HZx_1;
+    d/dt(P.Bladex_1) <- epsilon.MZx*dW.Bladex_1/W.Bladex_1;
+    
+    d/dt(P.HZm_1) <- epsilon.MZm*dW.HZm_1/W.HZm_1;
+    d/dt(P.Bladem_1) <- epsilon.MZm*dW.Bladem_1/W.Bladem_1;
+    
+    d/dt(Volume.HZx_1) <- dW.HZx_1/ro_Water;
+    d/dt(Volume.Bladex_1) <- dW.Bladex_1/ro_Water;
+    
+    d/dt(Volume.HZm_1) <- dW.HZm_1/ro_Water;
+    d/dt(Volume.Bladem_1) <- dW.Bladem_1/ro_Water;
+    
+    d/dt(Le.HZm_1) <- dLe.HZm_1;
+    d/dt(Wi.HZm_1) <- dWi.HZm_1;
+    d/dt(Th.HZm_1) <- dTh.HZm_1;
+    
+    d/dt(Le.Bladem_1) <- dLe.Bladem_1;
+    d/dt(Wi.Bladem_1) <- dWi.Bladem_1;
+    d/dt(Th.Bladem_1) <- dTh.Bladem_1;
+    
+    d/dt(Le.Leaf_1) <- dLe.HZm_1 + dLe.Bladem_1;
+    
+    d/dt(M.HZm_1) <- 0.0;
+    d/dt(M.Bladem_1) <- 0.0;
+ 
+
+    Transp.Blade_2 <- Transp_input*Area.Blade_2;
+    
+    Osm.HZm_2 <- -R * Temp * M.HZm_2 / (M_Suc*Volume.HZm_2*ro_Water);
+    Osm.Bladem_2 <- -R * Temp * M.Bladem_2 / (M_Suc*Volume.Bladem_2*ro_Water);
+    
+    W.HZx_2 <- Volume.HZx_2*ro_Water;
+    W.Bladex_2 <- Volume.Bladex_2*ro_Water;
+    
+    W.HZm_2 <- Volume.HZm_2*ro_Water;
+    W.Bladem_2 <- Volume.Bladem_2*ro_Water;
+   
+    Psi.HZm_2 <- P.HZm_2 + Osm.HZm_2;
+    Psi.Bladem_2 <- P.Bladem_2 + Osm.Bladem_2;
+
+    Psi.HZx_2 <- P.HZx_2;
+    Psi.Bladex_2 <- P.Bladex_2;
+    
+    F.HZx_2 <- (Psi.Root - Psi.HZx_2)/(R.Root/2+R.HZx_2/2);
+    F.Bladex_2 <- (Psi.HZx_2 - Psi.Bladex_2)/(R.HZx_2/2+R.Bladex_2/2);
+    
+    F.HZm_2 <- (Psi.HZx_2 - Psi.HZm_2)/R.HZm_2;
+    F.Bladem_2 <- (Psi.Bladex_2 - Psi.Bladem_2)/R.Bladem_2;
+    
+    dW.HZm_2 <- F.HZm_2;
+    dW.Bladem_2 <- F.Bladem_2 - Transp.Blade_2;
+    
+    dW.HZx_2 <- F.HZx_2 - F.HZm_2 - F.Bladex_2;
+    dW.Bladex_2 <- F.Bladex_2 - F.Bladem_2;
+    
+    dP.HZm_2 <- epsilon.MZm*dW.HZm_2/W.HZm_2; 
+    dP.Bladem_2 <- epsilon.MZm*dW.Bladem_2/W.Bladem_2;
+
+    dLe.HZm_2 = Le.HZm_2/epsilon.MZm_l *dP.HZm_2;
+    dWi.HZm_2 = Wi.HZm_2/epsilon.MZm_w *dP.HZm_2;
+    dTh.HZm_2 = Th.HZm_2/epsilon.MZm_th*dP.HZm_2;
+    
+    dLe.Bladem_2 = Le.Bladem_2/epsilon.MZm_l *dP.Bladem_2;
+    dWi.Bladem_2 = Wi.Bladem_2/epsilon.MZm_w *dP.Bladem_2;
+    dTh.Bladem_2 = Th.Bladem_2/epsilon.MZm_th*dP.Bladem_2;
+    
+    dLe.Leaf_2 = dLe.HZm_2 + dLe.Bladem_2;
+    
+    d/dt(P.HZx_2) <- epsilon.MZx*dW.HZx_2/W.HZx_2;
+    d/dt(P.Bladex_2) <- epsilon.MZx*dW.Bladex_2/W.Bladex_2;
+    
+    d/dt(P.HZm_2) <- epsilon.MZm*dW.HZm_2/W.HZm_2;
+    d/dt(P.Bladem_2) <- epsilon.MZm*dW.Bladem_2/W.Bladem_2;
+    
+    d/dt(Volume.HZx_2) <- dW.HZx_2/ro_Water;
+    d/dt(Volume.Bladex_2) <- dW.Bladex_2/ro_Water;
+    
+    d/dt(Volume.HZm_2) <- dW.HZm_2/ro_Water;
+    d/dt(Volume.Bladem_2) <- dW.Bladem_2/ro_Water;
+    
+    d/dt(Le.HZm_2) <- dLe.HZm_2;
+    d/dt(Wi.HZm_2) <- dWi.HZm_2;
+    d/dt(Th.HZm_2) <- dTh.HZm_2;
+    
+    d/dt(Le.Bladem_2) <- dLe.Bladem_2;
+    d/dt(Wi.Bladem_2) <- dWi.Bladem_2;
+    d/dt(Th.Bladem_2) <- dTh.Bladem_2;
+    
+    d/dt(Le.Leaf_2) <- dLe.HZm_2 + dLe.Bladem_2;
+    
+    d/dt(M.HZm_2) <- 0.0;
+    d/dt(M.Bladem_2) <- 0.0;
+ 
+
+    Transp.Blade_3 <- Transp_input*Area.Blade_3;
+    
+    Osm.HZm_3 <- -R * Temp * M.HZm_3 / (M_Suc*Volume.HZm_3*ro_Water);
+    Osm.Bladem_3 <- -R * Temp * M.Bladem_3 / (M_Suc*Volume.Bladem_3*ro_Water);
+    
+    W.HZx_3 <- Volume.HZx_3*ro_Water;
+    W.Bladex_3 <- Volume.Bladex_3*ro_Water;
+    
+    W.HZm_3 <- Volume.HZm_3*ro_Water;
+    W.Bladem_3 <- Volume.Bladem_3*ro_Water;
+   
+    Psi.HZm_3 <- P.HZm_3 + Osm.HZm_3;
+    Psi.Bladem_3 <- P.Bladem_3 + Osm.Bladem_3;
+
+    Psi.HZx_3 <- P.HZx_3;
+    Psi.Bladex_3 <- P.Bladex_3;
+    
+    F.HZx_3 <- (Psi.Root - Psi.HZx_3)/(R.Root/2+R.HZx_3/2);
+    F.Bladex_3 <- (Psi.HZx_3 - Psi.Bladex_3)/(R.HZx_3/2+R.Bladex_3/2);
+    
+    F.HZm_3 <- (Psi.HZx_3 - Psi.HZm_3)/R.HZm_3;
+    F.Bladem_3 <- (Psi.Bladex_3 - Psi.Bladem_3)/R.Bladem_3;
+    
+    dW.HZm_3 <- F.HZm_3;
+    dW.Bladem_3 <- F.Bladem_3 - Transp.Blade_3;
+    
+    dW.HZx_3 <- F.HZx_3 - F.HZm_3 - F.Bladex_3;
+    dW.Bladex_3 <- F.Bladex_3 - F.Bladem_3;
+    
+    dP.HZm_3 <- epsilon.MZm*dW.HZm_3/W.HZm_3; 
+    dP.Bladem_3 <- epsilon.MZm*dW.Bladem_3/W.Bladem_3;
+
+    dLe.HZm_3 = Le.HZm_3/epsilon.MZm_l *dP.HZm_3;
+    dWi.HZm_3 = Wi.HZm_3/epsilon.MZm_w *dP.HZm_3;
+    dTh.HZm_3 = Th.HZm_3/epsilon.MZm_th*dP.HZm_3;
+    
+    dLe.Bladem_3 = Le.Bladem_3/epsilon.MZm_l *dP.Bladem_3;
+    dWi.Bladem_3 = Wi.Bladem_3/epsilon.MZm_w *dP.Bladem_3;
+    dTh.Bladem_3 = Th.Bladem_3/epsilon.MZm_th*dP.Bladem_3;
+    
+    dLe.Leaf_3 = dLe.HZm_3 + dLe.Bladem_3;
+    
+    d/dt(P.HZx_3) <- epsilon.MZx*dW.HZx_3/W.HZx_3;
+    d/dt(P.Bladex_3) <- epsilon.MZx*dW.Bladex_3/W.Bladex_3;
+    
+    d/dt(P.HZm_3) <- epsilon.MZm*dW.HZm_3/W.HZm_3;
+    d/dt(P.Bladem_3) <- epsilon.MZm*dW.Bladem_3/W.Bladem_3;
+    
+    d/dt(Volume.HZx_3) <- dW.HZx_3/ro_Water;
+    d/dt(Volume.Bladex_3) <- dW.Bladex_3/ro_Water;
+    
+    d/dt(Volume.HZm_3) <- dW.HZm_3/ro_Water;
+    d/dt(Volume.Bladem_3) <- dW.Bladem_3/ro_Water;
+    
+    d/dt(Le.HZm_3) <- dLe.HZm_3;
+    d/dt(Wi.HZm_3) <- dWi.HZm_3;
+    d/dt(Th.HZm_3) <- dTh.HZm_3;
+    
+    d/dt(Le.Bladem_3) <- dLe.Bladem_3;
+    d/dt(Wi.Bladem_3) <- dWi.Bladem_3;
+    d/dt(Th.Bladem_3) <- dTh.Bladem_3;
+    
+    d/dt(Le.Leaf_3) <- dLe.HZm_3 + dLe.Bladem_3;
+    
+    d/dt(M.HZm_3) <- 0.0;
+    d/dt(M.Bladem_3) <- 0.0;
+ 
+
+    Transp.Blade_4 <- Transp_input*Area.Blade_4;
+    Osm.GZm_4 <- -R * Temp * M.GZm_4 / (M_Suc*Volume.GZm_4*ro_Water);
+    Osm.HZm_4 <- -R * Temp * M.HZm_4 / (M_Suc*Volume.HZm_4*ro_Water);
+    Osm.Bladem_4 <- -R * Temp * M.Bladem_4 / (M_Suc*Volume.Bladem_4*ro_Water);
+    
+    W.GZx_4 <- Volume.GZx_4*ro_Water;
+    W.HZx_4 <- Volume.HZx_4*ro_Water;
+    W.Bladex_4 <- Volume.Bladex_4*ro_Water;
+    
+    W.GZm_4 <- Volume.GZm_4*ro_Water;
+    W.HZm_4 <- Volume.HZm_4*ro_Water;
+    W.Bladem_4 <- Volume.Bladem_4*ro_Water;
+   
+    Psi.GZm_4 <- P.GZm_4 + Osm.GZm_4;
+    Psi.HZm_4 <- P.HZm_4 + Osm.HZm_4;
+    Psi.Bladem_4 <- P.Bladem_4 + Osm.Bladem_4;
+
+    Psi.GZx_4 <- P.GZx_4;
+    Psi.HZx_4 <- P.HZx_4;
+    Psi.Bladex_4 <- P.Bladex_4;
+    
+    F.GZx_4 <- (Psi.Root - Psi.GZx_4)/(R.Root/2+R.GZx_4/2);
+    F.HZx_4 <- (Psi.GZx_4 - Psi.HZx_4)/(R.GZx_4/2+R.HZx_4/2);
+    F.Bladex_4 <- (Psi.HZx_4 - Psi.Bladex_4)/(R.HZx_4/2+R.Bladex_4/2);
+    
+    F.GZm_4 <- (Psi.GZx_4 - Psi.GZm_4)/R.GZm_4;
+    F.HZm_4 <- (Psi.HZx_4 - Psi.HZm_4)/R.HZm_4;
+    F.Bladem_4 <- (Psi.Bladex_4 - Psi.Bladem_4)/R.Bladem_4;
+    
+    dW.GZm_4 <- F.GZm_4;
+    dW.HZm_4 <- F.HZm_4;
+    dW.Bladem_4 <- F.Bladem_4 - Transp.Blade_4;
+    
+    dW.GZx_4 <- F.GZx_4 - F.GZm_4 - F.HZx_4;
+    dW.HZx_4 <- F.HZx_4 - F.HZm_4 - F.Bladex_4;
+    dW.Bladex_4 <- F.Bladex_4 - F.Bladem_4;
+    
+    dP.GZx_4 <- epsilon.GZx*dW.GZx_4/W.GZx_4;
+    dP.HZx_4 <- epsilon.MZx*dW.HZx_4/W.HZx_4;
+    dP.Bladex_4 <- epsilon.MZx*dW.Bladex_4/W.Bladex_4;
+    
+    d/dt(P.GZx_4) <- dP.GZx_4;
+    d/dt(P.HZx_4) <- dP.HZx_4;
+    d/dt(P.Bladex_4) <- dP.Bladex_4;
+   
+    dP.GZm_4 <- epsilon.GZm*dW.GZm_4/W.GZm_4 - epsilon.GZm * fi.GZm * max((P.GZm_4 - Gamma),0);
+    dP.HZm_4 <- epsilon.MZm*dW.HZm_4/W.HZm_4; 
+    dP.Bladem_4 <- epsilon.MZm*dW.Bladem_4/W.Bladem_4;
+    
+    dLe.GZm_4 = Le.GZm_4/epsilon.GZm_l *dP.GZm_4 ; 
+    dWi.GZm_4 = Wi.GZm_4/epsilon.GZm_w *dP.GZm_4;
+    dTh.GZm_4 = Th.GZm_4/epsilon.GZm_th*dP.GZm_4;
+    
+    dLe.HZm_4 = Le.HZm_4/epsilon.MZm_l *dP.HZm_4;
+    dWi.HZm_4 = Wi.HZm_4/epsilon.MZm_w *dP.HZm_4;
+    dTh.HZm_4 = Th.HZm_4/epsilon.MZm_th*dP.HZm_4;
+    
+    dLe.Bladem_4 = Le.Bladem_4/epsilon.MZm_l *dP.Bladem_4 + fi.GZm*Le.GZm_4*max(P.GZm_4 - Gamma, 0);
+    dWi.Bladem_4 = Wi.Bladem_4/epsilon.MZm_w *dP.Bladem_4;
+    dTh.Bladem_4 = Th.Bladem_4/epsilon.MZm_th*dP.Bladem_4;
+    
+    dLe.Leaf_4 = dLe.GZm_4 + dLe.HZm_4 + dLe.Bladem_4;
+
+    dVolume.GZm_4 = (dLe.GZm_4*Wi.GZm_4*Th.GZm_4 + Le.GZm_4*dWi.GZm_4*Th.GZm_4 + Le.GZm_4*Wi.GZm_4*dTh.GZm_4);    
+    dVolume.HZm_4 = (dLe.HZm_4*Wi.HZm_4*Th.HZm_4 + Le.HZm_4*dWi.HZm_4*Th.HZm_4 + Le.HZm_4*Wi.HZm_4*dTh.HZm_4);    
+    dVolume.Bladem_4 = (dLe.Bladem_4*Wi.Bladem_4*Th.Bladem_4 + Le.Bladem_4*dWi.Bladem_4*Th.Bladem_4 + 
+			Le.Bladem_4*Wi.Bladem_4*dTh.Bladem_4 + dW.Bladex_4/ro_Water)*(1-Xyl_prop);    
+    
+    dVolume.GZx_4 = dW.GZx_4/ro_Water;
+    dVolume.HZx_4 = dW.HZx_4/ro_Water;
+    dVolume.Bladex_4 = (dLe.Bladem_4*Wi.Bladem_4*Th.Bladem_4 + Le.Bladem_4*dWi.Bladem_4*Th.Bladem_4 + 
+			Le.Bladem_4*Wi.Bladem_4*dTh.Bladem_4 + dW.Bladex_4/ro_Water)*(Xyl_prop);
+
+    d/dt(P.GZm_4) <- dP.GZm_4;
+    d/dt(P.HZm_4) <- dP.HZm_4;
+    d/dt(P.Bladem_4) <- dP.Bladem_4;
+    
+    d/dt(Volume.GZx_4) <- dVolume.GZx_4;
+    d/dt(Volume.HZx_4) <- dVolume.HZx_4;
+    d/dt(Volume.Bladex_4) <- dVolume.Bladex_4;
+    
+    d/dt(Volume.GZm_4) <- dVolume.GZm_4;
+    d/dt(Volume.HZm_4) <- dVolume.HZm_4;
+    d/dt(Volume.Bladem_4) <- dVolume.Bladem_4;
+
+    d/dt(Le.GZm_4) <- dLe.GZm_4;
+    d/dt(Wi.GZm_4) <- dWi.GZm_4;
+    d/dt(Th.GZm_4) <- dTh.GZm_4;   
+
+    d/dt(Le.HZm_4) <- dLe.HZm_4;
+    d/dt(Wi.HZm_4) <- dWi.HZm_4;
+    d/dt(Th.HZm_4) <- dTh.HZm_4;
+    
+    d/dt(Le.Bladem_4) <- dLe.Bladem_4;
+    d/dt(Wi.Bladem_4) <- dWi.Bladem_4;
+    d/dt(Th.Bladem_4) <- dTh.Bladem_4;
+    
+    d/dt(Le.Leaf_4) <- dLe.Leaf_4;
+    
+    if (P.GZm_4 > Gamma){
+      dM.GZm_4 <- Load_4*Volume.GZm_4 - M.GZm_4/W.GZm_4*(Wi.GZm_4*Th.GZm_4*fi.GZm*Le.GZm_4*max(P.GZm_4 - Gamma, 0)*ro_Water);
+      dM.HZm_4 <- M.GZm_4/W.GZm_4*(Wi.GZm_4*Th.GZm_4*fi.GZm*Le.GZm_4*max(P.GZm_4 - Gamma, 0)*ro_Water) * Volume.HZm_4/(Volume.HZm_4 + Volume.Bladem_4);
+      dM.Bladem_4 <- M.GZm_4/W.GZm_4*(Wi.GZm_4*Th.GZm_4*fi.GZm*Le.GZm_4*max(P.GZm_4 - Gamma, 0)*ro_Water) * Volume.Bladem_4/(Volume.HZm_4 + Volume.Bladem_4);
+    } else{
+      dM.GZm_4 <- Load_4*Volume.GZm_4 ;
+      dM.HZm_4 <- 0;
+      dM.Bladem_4 <- 0;
+    }
+    
+    d/dt(M.GZm_4) <- dM.GZm_4;
+    d/dt(M.HZm_4) <- dM.HZm_4;
+    d/dt(M.Bladem_4) <- dM.Bladem_4;
+ 
+
+    
+    Osm.GZm_5 <- -R * Temp * M.GZm_5 / (M_Suc*Volume.GZm_5*ro_Water);
+    Osm.HZm_5 <- -R * Temp * M.HZm_5 / (M_Suc*Volume.HZm_5*ro_Water);
+    
+    W.GZx_5 <- Volume.GZx_5*ro_Water;
+    W.HZx_5 <- Volume.HZx_5*ro_Water;
+    
+    W.GZm_5 <- Volume.GZm_5*ro_Water;
+    W.HZm_5 <- Volume.HZm_5*ro_Water;
+    
+    Psi.GZm_5 <- P.GZm_5 + Osm.GZm_5;
+    Psi.HZm_5 <- P.HZm_5 + Osm.HZm_5;
+    
+    Psi.GZx_5 <- P.GZx_5;
+    Psi.HZx_5 <- P.HZx_5;
+    
+    F.GZx_5 <- (Psi.Root - Psi.GZx_5)/(R.Root/2+R.GZx_5/2);
+    F.HZx_5 <- (Psi.GZx_5 - Psi.HZx_5)/(R.GZx_5/2+R.HZx_5/2);
+
+    F.GZm_5 <- (Psi.GZx_5 - Psi.GZm_5)/R.GZm_5;
+    F.HZm_5 <- (Psi.HZx_5 - Psi.HZm_5)/R.HZm_5;
+    
+    dW.GZm_5 <- F.GZm_5;
+    dW.HZm_5 <- F.HZm_5;
+    
+    dW.GZx_5 <- F.GZx_5 - F.GZm_5 - F.HZx_5;
+    dW.HZx_5 <- F.HZx_5 - F.HZm_5 ;
+    
+    dLe.GZm_5 = Le.GZm_5/epsilon.GZm_l *dP.GZm_5; 
+    dWi.GZm_5 = Wi.GZm_5/epsilon.GZm_w *dP.GZm_5;
+    dTh.GZm_5 = Th.GZm_5/epsilon.GZm_th*dP.GZm_5;
+    
+    dLe.HZm_5 = Le.HZm_5/epsilon.MZm_l *dP.HZm_5 + fi.GZm*Le.GZm_5*max(P.GZm_5 - Gamma, 0);
+    dWi.HZm_5 = Wi.HZm_5/epsilon.MZm_w *dP.HZm_5;
+    dTh.HZm_5 = Th.HZm_5/epsilon.MZm_th*dP.HZm_5;
+    
+    dLe.Leaf_5 = dLe.GZm_5 + dLe.HZm_5;
+    
+    dP.GZx_5 <- epsilon.GZx*dW.GZx_5/W.GZx_5;
+    dP.HZx_5 <- epsilon.MZx*dW.HZx_5/W.HZx_5;
+    
+    dP.GZm_5 <- epsilon.GZm*W.GZm_5*dW.GZm_5/W.GZm_5 - epsilon.GZm * fi.GZm * max((P.GZm_5 - Gamma),0)
+    dP.HZm_5 <- epsilon.MZm*dW.HZm_5/W.HZm_5;
+    
+    d/dt(P.GZx_5) <- dP.GZx_5;
+    d/dt(P.HZx_5) <- dP.HZx_5;
+    
+    d/dt(P.GZm_5) <- dP.GZm_5;
+    d/dt(P.HZm_5) <- dP.HZm_5;
+    
+    d/dt(Volume.GZx_5) <- dW.GZx_5/ro_Water;
+    d/dt(Volume.HZx_5) <- dW.HZx_5/ro_Water;
+    
+    d/dt(Volume.GZm_5) <- dW.GZm_5/ro_Water;
+    d/dt(Volume.HZm_5) <- dW.HZm_5/ro_Water;
+    
+    d/dt(Le.GZm_5) <- dLe.GZm_5;
+    d/dt(Le.HZm_5) <- dLe.HZm_5;
+    d/dt(Wi.GZm_5) <- dWi.GZm_5;
+    d/dt(Wi.HZm_5) <- dWi.HZm_5;
+    d/dt(Th.GZm_5) <- dTh.GZm_5;
+    d/dt(Th.HZm_5) <- dTh.HZm_5;
+    
+    d/dt(Le.Leaf_5) <- dLe.Leaf_5;
+
+    
+    if(P.GZm_5 > Gamma){
+      dM.GZm_5 <- Load_5*Volume.GZm_5 - M.GZm_5/W.GZm_5*(Wi.GZm_5*Th.GZm_5*fi.GZm*Le.GZm_5*max(P.GZm_5 - Gamma, 0)*ro_Water);
+      dM.HZm_5 <- M.GZm_5/W.GZm_5*(Wi.GZm_5*Th.GZm_5*fi.GZm*Le.GZm_5*max(P.GZm_5 - Gamma, 0)*ro_Water) ;
+    } else{
+      dM.GZm_5 <- Load_5*Volume.GZm_5 ;
+      dM.HZm_5 <- 0 ;
+    }
+    
+    d/dt(M.GZm_5) <- dM.GZm_5;
+    d/dt(M.HZm_5) <- dM.HZm_5;
+
+ 
+dW.Root <- F.Root - ( F.HZx_1 +  F.HZx_2 +  F.HZx_3 +  F.GZx_4 +  F.GZx_5 +  0);
+dP.Root <- epsilon.Root*dW.Root;
+dVolume.Root <- dW.Root/ro_Water;
+d/dt(P.Root) <- dP.Root;
+d/dt(Volume.Root) <- dVolume.Root; 
