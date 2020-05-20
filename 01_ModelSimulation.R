@@ -1,7 +1,13 @@
-# rm(list=ls())
-setwd("C:/Users/tdeswaef/Documents/GRASS_BLUE/Exp_2")
+
+############################
+# Set your working directory
+############################
+
+setwd("SETWD HERE")
+
+library(magrittr)
 library(RxODE)
-library(ggplot2)
+
 ##################
 # Input Data
 ##################
@@ -38,8 +44,6 @@ PLANTNo <- 1  #(1 to 4, 5 is the mean)
 START <- 0; STOP <- 5.9
 times <- seq(START, STOP, 0.01)
 
-
-
 ev <- eventTable(time.units='hours') %>%
   add.sampling(times)
 
@@ -59,7 +63,7 @@ INPUTLIST <- list(inputs_1,inputs_2, inputs_3, inputs_4, inputs_mean)
 
 
 ###################################
-# Parameters
+# Parameter values
 ###################################
 CSuc.GZ <- 0.193;           CSuc.HZ <- 0.23;           CSuc.Blade <- 0.23
 Temp <- 297;               Xyl_prop <- 0.005;         Le.Sheath <- 0.1
@@ -84,22 +88,18 @@ fi.GZm <- 0.1;             epsilon.GZx <- 1;         epsilon.MZx <- 3
 epsilon.GZm_l <- 0.15;       epsilon.GZm_w <- 0.15;       epsilon.GZm_th <- 0.15
 epsilon.MZm_l <- 3;       epsilon.MZm_w <- 3;       epsilon.MZm_th <- 0.15
 
-
-
 epsilon.GZm <- (epsilon.GZm_l * epsilon.GZm_w * epsilon.GZm_th )/ 
   (epsilon.GZm_l * epsilon.GZm_w + epsilon.GZm_l * epsilon.GZm_th + epsilon.GZm_th * epsilon.GZm_w)
 epsilon.MZm <- (epsilon.MZm_l * epsilon.MZm_w * epsilon.MZm_th )/ 
   (epsilon.MZm_l * epsilon.MZm_w + epsilon.MZm_l * epsilon.MZm_th + epsilon.MZm_th * epsilon.MZm_w)
 
-
-
 Load_4 <- 5600; Load_5 <- 5600
 
 
 
-
+#############################################################################
 ### Section below is not to be modified: setting units properly for the model
-
+#############################################################################
 s_to_h <- 3600; M_Water <- 18; M_Suc <- 342; R <- 8.31; ro_Water <- 1e06
 
 R.Root <- 1/(Cond.Root*M_Water/1000*s_to_h*Width.Blade_init*
@@ -225,54 +225,14 @@ source("Inits_Exp2.R")
 # Model compiling
 ##########################
 Model_GRASS <- RxODE(filename="GrassMod_Exp2.txt", modName = "GrassMod_Exp2", wd=".")
-#Model_GRASS
-# saveRDS(Model_GRASS, "Model_GRASS")
+saveRDS(Model_GRASS, "Model_GRASS")
 
 
 ###########################
-# Simulation
+# Simulation for Plant 'PLANTNo'
 
-#Simulation mean
-ptm <- Sys.time()
 out_Exp2 <- as.data.frame(Model_GRASS$solve(thetas_Exp2, ev, inits_Exp2, 
                                               covs=INPUTLIST[[PLANTNo]], covs_interpolation = "linear"))
-Sys.time()-ptm
 
-
-ggplot() + geom_line(data=out_Exp2, aes(x=time, y=Psi.GZx_4)) +
-  geom_line(data=out_Exp2, aes(x=time, y=Psi.HZx_4)) +
-  geom_line(data=out_Exp2, aes(x=time, y=Psi.Bladex_4)) +
-  geom_line(data=out_Exp2, aes(x=time, y=Psi.Bladem_4)) +
-  geom_line(data=out_Exp2, aes(x=time, y=Psi.GZm_4), color='blue')
-# 
-ggplot() + geom_line(data=out_Exp2, aes(x=time, y=P.GZm_4))
-# 
-# ggplot() +
-#   geom_line(data=out_Exp2, aes(x=time, y=Psi.HZx_1)) +
-#   geom_line(data=out_Exp2, aes(x=time, y=Psi.Bladex_1)) +
-#   geom_line(data=out_Exp2, aes(x=time, y=Psi.Bladem_1), color='blue') 
-# 
-# ggplot() +
-#   geom_line(data=out_Exp2, aes(x=time, y=Psi.HZx_2)) +
-#   geom_line(data=out_Exp2, aes(x=time, y=Psi.Bladex_2)) +
-#   geom_line(data=out_Exp2, aes(x=time, y=Psi.Bladem_2), color='blue') 
-# 
-# ggplot() +
-#   geom_line(data=out_Exp2, aes(x=time, y=F.Root)) +
-#   geom_line(data=out_Exp2, aes(x=time, y=Transp.Blade_1), color='red') +
-#   geom_line(data=out_Exp2, aes(x=time, y=Transp.Blade_2), color='blue') +
-#   geom_line(data=out_Exp2, aes(x=time, y=Transp.Blade_1+Transp.Blade_2+Transp.Blade_3+Transp.Blade_4), color='orange') 
-
-
-# out_ref <- out_Exp2
 saveRDS(out_Exp2, paste0("Simulation_Exp2_",PLANTNo))
 
-# print(epsilon.MZm)
-# 
-ggplot() +
-  geom_line(data = out_ref, aes(x=time, y=dLe.Leaf_4), size = 1) +
-  geom_line(data = out_Exp2, aes(x=time, y=dLe.Leaf_4), color= 'red', size = 2)
-
-# ggplot() +
-#   geom_line(data = out_ref, aes(x=time, y=P.Bladem_2), size = 1) + 
-#   geom_line(data = out_Exp2, aes(x=time, y=P.Bladem_2), color= 'red', size = 2) 
