@@ -6,7 +6,7 @@
 
 ### Requirements
 Developed on Windows 10  
-[RStudio](https://rstudio.com/)
+[RStudio](https://rstudio.com/)  
 [R](https://www.r-project.org/) version 3.6 or newer  
 [RxODE package](https://nlmixrdevelopment.github.io/RxODE/)  
 [rtools40](https://cran.r-project.org/bin/windows/Rtools)    
