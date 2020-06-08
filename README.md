@@ -4,6 +4,11 @@
 ### Authors: Tom De Swaef, Romain Barillot
 ### Paper: 
 
+### Requirements
+R version 3.6 or newer
+RxODE package
+rtools40
+
 ### Model simulation
 Model simulation is done as follows:
 - make sure that all files are in de same folder
