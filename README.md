@@ -1,6 +1,9 @@
 # GrassBlue
 ## Modelling leaf elongation rate in response to variations in blue light and VPD
 
+### Authors: Tom De Swaef, Romain Barillot
+### Paper: 
+
 ### Model simulation
 Model simulation is done as follows:
 - make sure that all files are in de same folder
