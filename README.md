@@ -17,6 +17,9 @@ __RDS files__
 - Input files Transpiration:
   - Time 	 - h (0-1 is stabilisation, 1-6 is actual data)
   - Transp - g m-2 h-1
+- Input file Soil water potential (constant in this case)
+  - Time    - h 
+  - PsiSoil - MPa
 - Calib files Leaf elongation:
   - Time   - h (0-1 is stabilisation, 1-6 is actual data)
   - LER    - m h-1
