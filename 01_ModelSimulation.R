@@ -131,7 +131,7 @@ R.GZm_4 <- 1/(Cond.GZm_G*M_Water/1000*s_to_h*(Le.GZm_4_init)*Peri_PX)
 R.HZm_4 <- 1/(Cond.HZm_G*M_Water/1000*s_to_h*(Le.Sheath - Le.GZm_4_init)*Width.Blade_init)
 R.Bladem_4 <- 1/(Cond.Bladem_G*M_Water/1000*s_to_h*(Le.Bladem_4_init*Width.Blade_init))
 
-R.GZm_4 <- 1/(Cond.GZm_G*M_Water/1000*s_to_h*(Le.GZm_5_init)*Peri_PX)
+R.GZm_5 <- 1/(Cond.GZm_G*M_Water/1000*s_to_h*(Le.GZm_5_init)*Peri_PX)
 R.GZx_5 <- 1/(Cond.GZx*M_Water/1000*s_to_h/(Le.GZm_5_init))
 R.HZx_5 <- 1/(Cond.HZx_G*M_Water/1000*s_to_h/(Le.HZm_5_init))
 R.HZm_5 <- 1/(Cond.HZm_G*M_Water/1000*s_to_h*(Le.HZm_5_init*Width.Blade_init)) 
