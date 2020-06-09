@@ -3,10 +3,13 @@
 # Set your working directory
 ############################
 
-setwd("SETWD HERE")
-
 library(magrittr)
 library(RxODE)
+library(rstudioapi) 
+
+current_path <- getActiveDocumentContext()$path 
+setwd(dirname(current_path ))
+
 
 ##################
 # Input Data
