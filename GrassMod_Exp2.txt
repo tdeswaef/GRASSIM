@@ -361,6 +361,12 @@ Area.Tiller <-  Area.Blade_1 + Area.Blade_2 + Area.Blade_3 + Area.Blade_4  ;
     dW.GZx_5 <- F.GZx_5 - F.GZm_5 - F.HZx_5;
     dW.HZx_5 <- F.HZx_5 - F.HZm_5 ;
     
+    dP.GZx_5 <- epsilon.GZx*dW.GZx_5/W.GZx_5;
+    dP.HZx_5 <- epsilon.MZx*dW.HZx_5/W.HZx_5;
+    
+    dP.GZm_5 <- epsilon.GZm*W.GZm_5*dW.GZm_5/W.GZm_5 - epsilon.GZm * fi.GZm * max((P.GZm_5 - Gamma),0)
+    dP.HZm_5 <- epsilon.MZm*dW.HZm_5/W.HZm_5;
+    
     dLe.GZm_5 = Le.GZm_5/epsilon.GZm_l *dP.GZm_5; 
     dWi.GZm_5 = Wi.GZm_5/epsilon.GZm_w *dP.GZm_5;
     dTh.GZm_5 = Th.GZm_5/epsilon.GZm_th*dP.GZm_5;
@@ -370,12 +376,6 @@ Area.Tiller <-  Area.Blade_1 + Area.Blade_2 + Area.Blade_3 + Area.Blade_4  ;
     dTh.HZm_5 = Th.HZm_5/epsilon.MZm_th*dP.HZm_5;
     
     dLe.Leaf_5 = dLe.GZm_5 + dLe.HZm_5;
-    
-    dP.GZx_5 <- epsilon.GZx*dW.GZx_5/W.GZx_5;
-    dP.HZx_5 <- epsilon.MZx*dW.HZx_5/W.HZx_5;
-    
-    dP.GZm_5 <- epsilon.GZm*W.GZm_5*dW.GZm_5/W.GZm_5 - epsilon.GZm * fi.GZm * max((P.GZm_5 - Gamma),0)
-    dP.HZm_5 <- epsilon.MZm*dW.HZm_5/W.HZm_5;
     
     d/dt(P.GZx_5) <- dP.GZx_5;
     d/dt(P.HZx_5) <- dP.HZx_5;

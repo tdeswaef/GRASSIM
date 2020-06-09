@@ -1,6 +1,16 @@
 # GrassBlue
 ## Modelling leaf elongation rate in response to variations in blue light and VPD
 
+### Authors: Tom De Swaef, Romain Barillot
+### Paper: 
+
+### Requirements
+Developed on Windows 10  
+[RStudio](https://rstudio.com/)  
+[R](https://www.r-project.org/) version 3.6 or newer  
+[RxODE package](https://nlmixrdevelopment.github.io/RxODE/)  
+[rtools40](https://cran.r-project.org/bin/windows/Rtools)    
+
 ### Model simulation
 Model simulation is done as follows:
 - make sure that all files are in de same folder
@@ -17,6 +27,9 @@ __RDS files__
 - Input files Transpiration:
   - Time 	 - h (0-1 is stabilisation, 1-6 is actual data)
   - Transp - g m-2 h-1
+- Input file Soil water potential (constant in this case)
+  - Time    - h 
+  - PsiSoil - MPa
 - Calib files Leaf elongation:
   - Time   - h (0-1 is stabilisation, 1-6 is actual data)
   - LER    - m h-1

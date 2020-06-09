@@ -227,15 +227,17 @@ source("Inits_Exp2.R")
 ##########################
 # Model compiling
 ##########################
-Model_GRASS <- RxODE(filename="GrassMod_Exp2.txt", modName = "GrassMod_Exp2", wd=".")
+Model_GRASS <- RxODE(filename="GrassMod_Exp2.txt", modName = "GrassMod")
 saveRDS(Model_GRASS, "Model_GRASS")
 
 
 ###########################
 # Simulation for Plant 'PLANTNo'
+ev$Psi_Soil_input <- INPUTLIST[[PLANTNo]]$Psi_Soil_input
+ev$Transp_input <- INPUTLIST[[PLANTNo]]$Transp_input
 
 out_Exp2 <- as.data.frame(Model_GRASS$solve(thetas_Exp2, ev, inits_Exp2, 
-                                              covs=INPUTLIST[[PLANTNo]], covs_interpolation = "linear"))
+                                            covs_interpolation = "linear"))
 
 saveRDS(out_Exp2, paste0("Simulation_Exp2_",PLANTNo))
 
