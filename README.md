@@ -2,7 +2,7 @@
 ## Modelling leaf elongation rate in response to variations in blue light and VPD
 
 ### Authors: Tom De Swaef, Romain Barillot
-### Paper: 
+### Paper: [Barillot et al. 2021](https://doi.org/10.1093/jxb/eraa585)
 
 ### Requirements
 Developed on Windows 10  
